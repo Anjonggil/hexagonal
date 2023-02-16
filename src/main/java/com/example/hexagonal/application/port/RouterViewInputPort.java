@@ -1,7 +1,8 @@
 package com.example.hexagonal.application.port;
 
 import com.example.hexagonal.application.usecase.RouterViewUseCase;
-import com.example.hexagonal.domain.Router;
+import com.example.hexagonal.domain.entity.Router;
+import com.example.hexagonal.domain.service.RouterSearch;
 import lombok.var;
 
 import java.util.List;
@@ -18,6 +19,6 @@ public class RouterViewInputPort implements RouterViewUseCase {
     @Override
     public List<Router> getRouters(Predicate<Router> filter) {
         var routers = routerViewOutputPort.fetchRouters();
-        return Router.retrieveRouter(routers,filter);
+        return RouterSearch.retrieveRouter(routers,filter);
     }
 }

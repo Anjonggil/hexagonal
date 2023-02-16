@@ -1,9 +1,9 @@
 package com.example.hexagonal.framework.adapter;
 
 import com.example.hexagonal.application.port.RouterViewOutputPort;
-import com.example.hexagonal.domain.Router;
-import com.example.hexagonal.domain.RouterId;
-import com.example.hexagonal.domain.RouterType;
+import com.example.hexagonal.domain.entity.Router;
+import com.example.hexagonal.domain.vo.RouterId;
+import com.example.hexagonal.domain.vo.RouterType;
 import lombok.var;
 
 import java.io.BufferedReader;
@@ -30,7 +30,7 @@ public class RouterViewFileAdapter implements RouterViewOutputPort {
                     String[] routerEntry = line.split(";");
                     var id = routerEntry[0];
                     var type = routerEntry[1];
-                    Router router = new Router(RouterType.valueOf(type) , RouterId.of(id));
+                    Router router = new Router(RouterType.valueOf(type) , RouterId.withId(id));
                     routers.add(router);
                 });
             }

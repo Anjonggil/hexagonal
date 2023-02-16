@@ -1,4 +1,6 @@
-package com.example.hexagonal.domain;
+package com.example.hexagonal.domain.service;
+
+import com.example.hexagonal.domain.entity.Router;
 
 import java.util.List;
 import java.util.function.Predicate;
