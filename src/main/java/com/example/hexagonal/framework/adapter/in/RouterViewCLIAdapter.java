@@ -1,9 +1,10 @@
-package com.example.hexagonal.framework.adapter;
+package com.example.hexagonal.framework.adapter.in;
 
 import com.example.hexagonal.application.port.RouterViewInputPort;
 import com.example.hexagonal.application.usecase.RouterViewUseCase;
 import com.example.hexagonal.domain.entity.Router;
 import com.example.hexagonal.domain.vo.RouterType;
+import com.example.hexagonal.framework.adapter.out.RouterViewFileAdapter;
 
 import java.util.List;
 

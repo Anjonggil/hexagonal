@@ -1,4 +1,4 @@
-package com.example.hexagonal.framework.adapter;
+package com.example.hexagonal.framework.adapter.out;
 
 import com.example.hexagonal.application.port.RouterViewOutputPort;
 import com.example.hexagonal.domain.entity.Router;

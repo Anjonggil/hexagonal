@@ -1,7 +1,10 @@
 package com.example.hexagonal.domain.vo;
 
+import lombok.Getter;
+
 import java.util.UUID;
 
+@Getter
 public class SwitchId {
 
     private final UUID id;

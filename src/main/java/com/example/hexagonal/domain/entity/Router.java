@@ -4,10 +4,12 @@ import com.example.hexagonal.domain.vo.IP;
 import com.example.hexagonal.domain.vo.Network;
 import com.example.hexagonal.domain.vo.RouterId;
 import com.example.hexagonal.domain.vo.RouterType;
+import lombok.Getter;
 
 import java.util.List;
 import java.util.function.Predicate;
 
+@Getter
 public class Router {
 
     private final RouterType routerType;
@@ -15,6 +17,12 @@ public class Router {
     private final RouterId routerId;
 
     private Switch networkSwitch;
+
+    public Router(RouterType routerType, RouterId routerId, Switch networkSwitch) {
+        this.routerType = routerType;
+        this.routerId = routerId;
+        this.networkSwitch = networkSwitch;
+    }
 
     public Router(RouterType routerType, RouterId routerId) {
         this.routerType = routerType;

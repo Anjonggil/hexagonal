@@ -4,12 +4,14 @@ import com.example.hexagonal.domain.vo.IP;
 import com.example.hexagonal.domain.vo.Network;
 import com.example.hexagonal.domain.vo.SwitchId;
 import com.example.hexagonal.domain.vo.SwitchType;
+import lombok.Getter;
 import lombok.var;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class Switch {
 
     private SwitchType type;

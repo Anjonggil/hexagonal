@@ -1,5 +1,8 @@
 package com.example.hexagonal.domain.vo;
 
+import lombok.Getter;
+
+@Getter
 public class IP {
 
     private final String address;
@@ -17,5 +20,9 @@ public class IP {
             this.protocol = Protocol.IPV6;
         }
         this.address = address;
+    }
+
+    public static IP fromAddress(String address) {
+        return new IP(address);
     }
 }
