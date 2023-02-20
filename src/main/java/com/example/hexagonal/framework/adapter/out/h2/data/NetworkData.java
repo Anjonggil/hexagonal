@@ -21,6 +21,7 @@ public class NetworkData implements Serializable {
     private int id;
 
     @Column(name = "swicth_id")
+    @Convert(converter = UUIDTypeConverter.class)
     private UUID switchId;
 
     @Embedded

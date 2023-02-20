@@ -16,10 +16,10 @@ import java.util.UUID;
 @Table(name = "routers")
 @SecondaryTable(name = "switches")
 @MappedSuperclass
-@Converter()
 public class RouterData implements Serializable {
     @Id
     @Column(name = "router_id", columnDefinition = "uuid", updatable = false)
+    @Convert(converter = UUIDTypeConverter.class)
     private UUID routerId;
 
     @Embedded

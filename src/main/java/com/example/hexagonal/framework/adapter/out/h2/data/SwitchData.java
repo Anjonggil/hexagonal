@@ -21,9 +21,11 @@ public class SwitchData implements Serializable {
     @Column(name="switch_id",
             columnDefinition = "uuid",
             updatable = false )
+    @Convert(converter = UUIDTypeConverter.class)
     private UUID switchId;
 
     @Column(name="router_id")
+    @Convert(converter = UUIDTypeConverter.class)
     private UUID routerId;
 
     @Enumerated(EnumType.STRING)

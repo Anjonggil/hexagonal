@@ -2,6 +2,7 @@ package com.example.hexagonal.framework.adapter.in;
 
 import com.example.hexagonal.application.usecase.RouterNetworkUseCase;
 import com.example.hexagonal.domain.entity.Router;
+import com.example.hexagonal.framework.adapter.out.file.mapper.RouterJsonFileMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpServer;
 import lombok.var;
