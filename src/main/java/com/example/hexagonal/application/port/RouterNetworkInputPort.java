@@ -11,7 +11,7 @@ public class RouterNetworkInputPort implements RouterNetworkUseCase {
 
     private final RouterNetworkOutputPort routerNetworkOutputPort;
 
-    public RouterNetworkInputPort(RouterNetworkOutputPort routerNetworkOutputPort) {
+    public RouterNetworkInputPort(RouterNetworkOutputPort routerNetworkOutputPort, NotifyEventOutputPort notifyOutputPort) {
         this.routerNetworkOutputPort = routerNetworkOutputPort;
     }
 
@@ -19,6 +19,11 @@ public class RouterNetworkInputPort implements RouterNetworkUseCase {
     public Router addNetworkToRouter(RouterId routerId, Network network) throws IllegalAccessException {
         var router = fetchRouter(routerId);
         return createNetwork(router, network);
+    }
+
+    @Override
+    public Router getRouter(RouterId routerId) {
+        return fetchRouter(routerId);
     }
 
     private Router createNetwork(Router router, Network network) throws IllegalAccessException {

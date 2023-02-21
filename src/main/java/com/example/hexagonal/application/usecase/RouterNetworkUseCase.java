@@ -6,4 +6,6 @@ import com.example.hexagonal.domain.vo.RouterId;
 
 public interface RouterNetworkUseCase {
     Router addNetworkToRouter(RouterId routerId, Network network) throws IllegalAccessException;
+
+    Router getRouter(RouterId routerId);
 }

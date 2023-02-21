@@ -1,11 +1,16 @@
 package com.example.hexagonal;
 
+import com.example.hexagonal.application.port.NotifyEventOutputPort;
 import com.example.hexagonal.application.port.RouterNetworkInputPort;
 import com.example.hexagonal.application.port.RouterNetworkOutputPort;
 import com.example.hexagonal.application.usecase.RouterNetworkUseCase;
-import com.example.hexagonal.framework.adapter.in.RouterNetworkAdapter;
-import com.example.hexagonal.framework.adapter.in.RouterNetworkRestAdapter;
+import com.example.hexagonal.framework.adapter.in.RouterManageNetworkAdapter;
+import com.example.hexagonal.framework.adapter.in.file.RouterNetworkCLIAdapter;
+import com.example.hexagonal.framework.adapter.in.rest.RouterNetworkRestAdapter;
+import com.example.hexagonal.framework.adapter.in.websocket.NotifyEventWebSocketAdapter;
+import com.example.hexagonal.framework.adapter.out.file.RouterNetworkFileAdapter;
 import com.example.hexagonal.framework.adapter.out.h2.RouterNetworkH2Adapter;
+import com.example.hexagonal.framework.adapter.out.kafka.NotifyEventKafkaAdapter;
 import com.sun.net.httpserver.HttpServer;
 import lombok.var;
 
@@ -15,11 +20,13 @@ import java.util.Scanner;
 
 public class App {
 
-    RouterNetworkAdapter inputAdapter;
+    RouterManageNetworkAdapter inputAdapter;
     RouterNetworkUseCase useCase;
-    RouterNetworkOutputPort outputPort;
+    RouterNetworkOutputPort routerOutputPort;
 
-    public static void main(String[] args) {
+    NotifyEventOutputPort notifyOutputPort;
+
+    public static void main(String[] args) throws IllegalAccessException, IOException, InterruptedException {
         var adapter = "cli";
         if (args.length>0){
             adapter = args[0];
@@ -27,23 +34,25 @@ public class App {
         new App().setAdapter(adapter);
     }
 
-    void setAdapter(String adapter) {
+    void setAdapter(String adapter) throws IllegalAccessException, IOException, InterruptedException {
         switch (adapter) {
             case "rest" :
-                outputPort = RouterNetworkH2Adapter.getInstance();
-                useCase = new RouterNetworkInputPort(outputPort);
-                inputAdapter = new RouterNetworkRestAdapter(useCase);
+                routerOutputPort = RouterNetworkH2Adapter.getInstance();
+                notifyOutputPort = NotifyEventKafkaAdapter.getInstance();
+                useCase = new RouterNetworkInputPort(routerOutputPort, notifyOutputPort);
+                inputAdapter= new RouterNetworkRestAdapter(useCase);
                 rest();
+                NotifyEventWebSocketAdapter.startServer();
                 break;
             default:
-                outputPort = RouterNetworkFileAdapter.getInstance();
-                useCase = new RouterNetworkInputPort(outputPort);
+                routerOutputPort = RouterNetworkFileAdapter.getInstance();
+                useCase = new RouterNetworkInputPort(routerOutputPort, notifyOutputPort);
                 inputAdapter = new RouterNetworkCLIAdapter(useCase);
                 cli();
         }
     }
 
-    private void cli(){
+    private void cli() throws IllegalAccessException {
         Scanner scanner = new Scanner(System.in);
         inputAdapter.processRequest(scanner);
     }
@@ -53,7 +62,7 @@ public class App {
             System.out.println("REST endpoint listening on port 8080...");
             var httpserver = HttpServer.create(new InetSocketAddress(8080),0);
             inputAdapter.processRequest(httpserver);
-        } catch (IOException e){
+        } catch (IOException | IllegalAccessException e){
             e.printStackTrace();
         }
     }

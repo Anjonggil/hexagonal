@@ -1,7 +1,8 @@
-package com.example.hexagonal.framework.adapter.in;
+package com.example.hexagonal.framework.adapter.in.rest;
 
 import com.example.hexagonal.application.usecase.RouterNetworkUseCase;
 import com.example.hexagonal.domain.entity.Router;
+import com.example.hexagonal.framework.adapter.in.RouterManageNetworkAdapter;
 import com.example.hexagonal.framework.adapter.out.file.mapper.RouterJsonFileMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpServer;
@@ -18,7 +19,7 @@ import java.util.*;
 
 import static java.util.stream.Collectors.*;
 
-public class RouterNetworkRestAdapter extends RouterNetworkAdapter{
+public class RouterNetworkRestAdapter extends RouterManageNetworkAdapter {
 
     public RouterNetworkRestAdapter(RouterNetworkUseCase routerNetworkUseCase) {
         this.routerNetworkUseCase = routerNetworkUseCase;
@@ -45,7 +46,10 @@ public class RouterNetworkRestAdapter extends RouterNetworkAdapter{
                     } catch (IllegalAccessException e) {
                         throw new RuntimeException(e);
                     }
-                    ;
+                }
+
+                if (exchange.getRequestURI().getPath().equals("/network/get")){
+                    router = this.getRouter(params);
                 }
             }));
         }

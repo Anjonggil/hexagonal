@@ -9,7 +9,7 @@ import lombok.var;
 
 import java.util.Map;
 
-public abstract class RouterNetworkAdapter {
+public abstract class RouterManageNetworkAdapter {
     protected Router router;
     protected RouterNetworkUseCase routerNetworkUseCase;
 
@@ -21,5 +21,10 @@ public abstract class RouterNetworkAdapter {
         return routerNetworkUseCase.addNetworkToRouter(routerId,network);
     }
 
-    public abstract Router processRequest(Object requestParams);
+    public abstract Router processRequest(Object requestParams) throws IllegalAccessException;
+
+    public Router getRouter(Map<String, String> params){
+        var routerId = RouterId.withId(params.get("routerId"));
+        return routerNetworkUseCase.getRouter(routerId);
+    }
 }
